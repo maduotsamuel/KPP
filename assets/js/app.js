@@ -19,11 +19,11 @@ export async function getRecords(table,limit=100){
 }
 function card(item,artist=false){
  const name=artist?item.name:item.title;const meta=artist?item.genre:item.category;
- return `<article class="gallery-item reveal-item"><img loading="lazy" src="${esc(item.image)}" alt="${esc(name)}"><div class="gallery-content"><small>${esc(meta)}</small><h3>${esc(name)}</h3><p>${esc(item.description)}</p></div></article>`;
+ return `<article class="gallery-item"><img loading="lazy" src="${esc(item.image)}" alt="${esc(name)}"><div class="gallery-content"><small>${esc(meta)}</small><h3>${esc(name)}</h3><p>${esc(item.description)}</p></div></article>`;
 }
 export async function gallery(table,id,limit){
  const el=document.getElementById(id);if(!el)return;
- try{const entries=await getRecords(table,limit);el.innerHTML=entries.length?entries.map(x=>card(x,table==='artists')).join(''):'<p>No items published yet. Check back soon.</p>';window.startReveal?.();}
+ try{const entries=await getRecords(table,limit);el.innerHTML=entries.length?entries.map(x=>card(x,table==='artists')).join(''):'<p>No items published yet. Check back soon.</p>';}
  catch(e){el.textContent='Unable to load content right now. Please try again later.';console.error(e);}
 }
 export function message(id,text,success=false){const e=document.getElementById(id);if(!e)return;e.className=`alert ${success?'alert-success':'alert-danger'}`;e.textContent=text;e.hidden=false;}
